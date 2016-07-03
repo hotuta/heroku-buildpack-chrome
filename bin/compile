@@ -1,0 +1,25 @@
+#!/bin/sh
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+echo "-----> Installing unzip"
+apt-get install unzip
+
+echo "Downloading and installing ChromeDriver to ${BUILD_DIR}"
+
+echo "-----> Downloading"
+wget -N http://chromedriver.storage.googleapis.com/2.10/chromedriver_linux64.zip -P $BUILD_DIR
+
+echo "-----> Unzip"
+unzip "$BUILD_DIR/chromedriver_linux64.zip" -d $BUILD_DIR
+
+echo "-----> chmod"
+chmod +x "$BUILD_DIR/chromedriver"
+
+echo "-----> mv /usr/local/share"
+mv -f "$BUILD_DIR/chromedriver" /usr/local/share/chromedriver
+
+echo "-----> ln"
+ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
